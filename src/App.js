@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import { digimonService } from './services/digimon';
 
 function App() {
+  digimonService.fetchAllDigimons();
   return (
     <div className="App">
       <header className="App-header">
