@@ -1,27 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
-import { digimonService } from './services/digimon';
+import DigiHome from './Pages/DigiHome';
+import {Route, Routes} from 'react-router-dom';
+import AllDigimons from './Pages/AllDigimons';
+import FloatingDigivice from './components/floatingDigivice';
 
 function App() {
-  digimonService.fetchAllDigimons();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <FloatingDigivice/>
+      <Routes>
+        <Route path='/' element={<DigiHome/>}></Route>
+        <Route path='/digimons' element={<AllDigimons />}></Route>
+      </Routes>
     </div>
-  );
+  )
+
+ /*  return(
+    <DigiHome />
+  ) */
+
+  /* return (
+    <>
+      <div className = 'digidex-area'>
+        <DigimonList digimonList={[]} fullFilled={true}  />
+      </div>
+    </>
+  ); */
 }
 
 export default App;

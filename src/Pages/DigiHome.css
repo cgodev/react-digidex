@@ -1,0 +1,80 @@
+.digiHome{
+    margin-block: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo{
+    width: 30%;
+    display: flex;
+}
+.searchTitle {
+    font-family: 'Digivolve';
+    color: #eee;
+    -webkit-text-stroke: 1px black;
+    font-family: 'Digivolve';
+    font-size: 2rem;
+    text-align: center;
+    margin-block: 1rem;
+}
+
+.searchInput {
+    margin-block: 1rem;
+    background-color: #eee;
+    padding: 1rem;
+    width: 50%;
+    -webkit-border-radius: 24px 0px 24px 0px;
+    -moz-border-radius: 24px 0px 24px 0px;
+    border-radius: 24px 0px 24px 0px;
+    text-align: center;
+    color: black;
+    border: 5px solid #0E39B0;
+    font-family: 'Digivolve';
+    font-size: 1.5rem;
+}
+
+.searchInput:focus-visible {
+    outline: none;
+}
+
+.searchForm {
+    display: block;
+    margin-block: 1rem;
+}
+
+.searchForm label,
+input,
+button {
+    display: block;
+}
+.searchActionsWrapper{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.searchActionsWrapper *{
+    margin-inline: 1rem;
+}
+
+.searchButton {
+    padding: .5rem 1rem;
+    background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(315deg, rgba(255, 255, 255, 0) 8%, rgba(251, 168, 52, 1) 86%);
+    background: -webkit-linear-gradient(315deg, rgba(255, 255, 255, 0) 8%, rgba(251, 168, 52, 1) 86%);
+    background: linear-gradient(315deg, rgba(255, 255, 255, 0) 8%, rgba(251, 168, 52, 1) 86%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#fba834", GradientType=1);
+    border: none;
+    font-size: 1.5rem;
+    border: 2px solid white;
+    color: white;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    font-weight: bold;
+    text-decoration: none   ;
+}
+
+.searchButton:hover {
+    background-color: rgba(251, 168, 52, 1);
+}
