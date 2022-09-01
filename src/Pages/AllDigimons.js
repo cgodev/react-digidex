@@ -1,10 +1,13 @@
 import DigimonList from "../components/digimonList"
+import { searchBehaviors } from "../enums/searchBehaviorEnums";
 
 const AllDigimons = () => {
     return (
         <>
             <section className="section">
-                <DigimonList digimonList={[]} fullFilled={true} />
+                <div className="container">
+                    <DigimonList criteria={null} behavior={searchBehaviors.all} />
+                </div>
             </section>
         </>
     )

@@ -28,7 +28,22 @@ const fetchDigimonsByName = (name) => {
         }))
 }
 
+const fetchDigimonsByLevel = (level) => {
+    return fetch(`${BASE_URL}/digimon/level/${level} `)
+        .then(res => res.json().then(digimons => {
+            if(digimons.length > 0){
+                return digimons.map((digimon, index) => {
+                    return {
+                        id: `${index}${digimon.name}`,
+                        ...digimon
+                    }
+                })
+            }else return [];
+        }))
+}
+
 export const digimonService = {
     fetchAllDigimons,
-    fetchDigimonsByName
+    fetchDigimonsByName,
+    fetchDigimonsByLevel
 }

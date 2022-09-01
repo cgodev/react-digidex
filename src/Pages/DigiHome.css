@@ -1,14 +1,13 @@
 .digiHome{
     margin-block: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .logo{
     width: 30%;
     display: flex;
 }
+
+
 .searchTitle {
     font-family: 'Digivolve';
     color: #eee;
@@ -77,4 +76,13 @@ button {
 
 .searchButton:hover {
     background-color: rgba(251, 168, 52, 1);
+}
+
+@media screen and (max-width: 992px) {
+    .logo{
+        width: 50%;
+    }
+    .searchInput{
+        width: 100%;
+    }
 }

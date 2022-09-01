@@ -1,40 +1,46 @@
 import { useState } from 'react';
 import './DigiHome.css';
-import { digimonService } from '../services/digimonService';
 import DigimonList from '../components/digimonList';
 import {Link} from 'react-router-dom';
+import DigiFilter from '../components/digiFilter';
+import { searchBehaviors } from '../enums/searchBehaviorEnums';
 
 const DigiHome = () => {
 
     const [searchCriteria, setSearchCriteria] = useState('');
-    const [digimonsResult, setDigimonsResult] = useState([]);
+    const [searchBehavior, setSearchBehavior] = useState(searchBehaviors.byName);
 
-    const searchDigimon = () => {
-        digimonService.fetchDigimonsByName(searchCriteria).then(digimons => {
-            setDigimonsResult(digimons);
-        })
+    const searchDigimonsByCriteria = (event) => {
+        event.preventDefault();
+        setSearchBehavior(searchBehaviors.byName);
     }
-    const handleForm = (key) => {
-        if(key === 'Enter'){
-            searchDigimon()
-        }
+
+    const searchDigimonsByLevel = (level, closeBehavior) => {
+        setSearchCriteria(level);
+        setSearchBehavior(searchBehaviors.byLevel);
+        closeBehavior();
     }
 
     return(
-        <section className="digiHome">
-            <div className="container">
-                <img src={'/assets/images/digimon-logo.png'} alt="Digimon Logo" className='logo img-fluid'/>
-                <div className='searchForm'>
-                    <label for='searchInput' className='searchTitle'>Buscar Digimon</label>
-                    <input id='searchInput' onKeyUp={(e) => handleForm(e.key)} onChange={(e) => setSearchCriteria(e.target.value)} value={searchCriteria} className='searchInput' placeholder='Ingresa el nombre del Digimon:' />
-                    <div className='searchActionsWrapper'>
-                        <button type='button' onClick={()=>{searchDigimon()}} className='searchButton'>Buscar</button>
-                        <Link to='/digimons' className='searchButton'>Todos</Link>
-                    </div>
+        <>
+            <DigiFilter behavior={searchDigimonsByLevel}/>
+            <section className="digiHome">
+                <div className="container">
+                    <img src={'/assets/images/digimon-logo.png'} alt="Digimon Logo" className='logo img-fluid'/>
+                    <form className='searchForm' onSubmit={searchDigimonsByCriteria}>
+                        <label for='searchInput' className='searchTitle'>Buscar Digimon</label>
+                        <input id='searchInput' onChange={(e) => setSearchCriteria(e.target.value)} value={searchCriteria} className='searchInput' placeholder='Digimon:' />
+                        <div className='searchActionsWrapper'>
+                            <button type='button' onClick={()=>{searchDigimonsByCriteria()}} className='searchButton'>Buscar</button>
+                            <Link to='/digimons' className='searchButton'>Todos</Link>
+                        </div>
+                    </form>
+                    <DigimonList criteria={searchCriteria} behavior={searchBehavior}/>
                 </div>
-                <DigimonList digimonList={digimonsResult} fullFilled={false}/>
-            </div>
-        </section>
+                
+            </section>
+            
+        </>
     )
 }
 

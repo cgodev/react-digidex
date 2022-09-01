@@ -1,71 +1,54 @@
-import {
-    useEffect,
-    useState
-} from 'react';
-import {
-    digimonService
-} from '../services/digimonService';
 import DigiFilter from "../components/digiFilter";
+import { searchBehaviors } from '../enums/searchBehaviorEnums';
+import useDigimons from '../hooks.js/useDigimons';
+import {Link} from 'react-router-dom';
 
-const DigimonList = ({digimonList = [], fullFilled = false}) => {
-    let [digimons, setDigimons] = useState([]);
-    const [digimonsBK, setDigimonsBK] = useState([]);
-    const [filtered, setFiltered] = useState(false);
+const DigimonList = (props) => {
+    console.log(props);
+    const {digimons, loading, setSearchCriteria, setSearchBehavior} = useDigimons(props);
+    //let [digimons, setDigimons] = useState([]); 
+    
+    /* useEffect(() => {
+        console.log(`Props ${props.criteria}/${props.behavior}`);
+        setSearchBehavior(props.behavior);
+        setSearchCriteria(props.criteria);
+    }, [props, digimons]) */
 
-    const backupDigimons = () => {
-        digimons = digimonsBK;
-        //setDigimons(digimonsBK);
-    }
+    
 
-    useEffect(() => {
-        console.log(`Use effect`);
-        if(fullFilled){
-            fetchDigimonsData();
-            console.log(`Fullfilled`);
-        }else{
-            setDigimons(digimonList);
-            setDigimonsBK(digimonList);
-            console.log(`By search`);
-        }
-    }, [digimonList, fullFilled])
-
-    const fetchDigimonsData = async () => {
-        await digimonService.fetchAllDigimons().then(digimons => {
-            setDigimons(digimons)
-            setDigimonsBK(digimons);
-        });
-    }   
-
-    if(digimons.length <= 0 && !fullFilled){
-        return <span>No hay digimones con ese nombre</span>
-    } 
-
-    const applyFilter = async(filter, closeBehavior) => {
-        
-        if(filtered){
-            /* Problem Here!!! */
-            //setDigimons(digimonsBK); it doesn't update the digimon array.
-            backupDigimons(); //with it works properly but it's not recommended
-        }
-        const digimonsFiltered = digimons.filter(digimon => digimon.level === filter);
-        setDigimons(digimonsFiltered);
-        setFiltered(true);
+    const applyFilter = (filter, closeBehavior) => {
+        console.log(`Searching.. ${filter}`);
+        setSearchCriteria(filter);
+        setSearchBehavior(searchBehaviors.byLevel);
         closeBehavior();
-        console.log(digimonsFiltered);
+        console.log(`Search Done..`);
     }
+
+    
 
     let logoElement = '';
 
-    if(fullFilled){
-        logoElement = `<div className='container'>
-            <img src='/assets/images/digimon-logo.png' className='logo img-fluid' alt='digimon-logo'/>
-        </div>`
-    }
+    if(props.behavior === searchBehaviors.all){
+        logoElement = <Link to='/'>
+            <div className='container'>
+                <img src='/assets/images/digimon-logo.png' className='logo img-fluid' alt='digimon-logo'/>
+            </div>
+        </Link>
+    } 
+
+    if(props.criteria === '' && digimons.length <= 0){
+        return <span className='digimons-notfound'>Busca un Digimon</span>
+    } 
+
+    if(digimons.length <= 0){
+        return <span className='digimons-notfound'>No hay digimones con el nombre {props.criteria}</span>
+    } 
 
 
     return (
         <>
             <DigiFilter behavior={applyFilter}/>
+            {logoElement}
             <div className='digiGrid'>
                 {
                     digimons.map(digimon =>  {

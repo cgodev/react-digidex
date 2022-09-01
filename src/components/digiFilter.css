@@ -36,3 +36,10 @@
     border-color: black;
     color: black;
 }
+
+@media screen and (max-width: 1024px) {
+    .digiFilter {
+        width: 100%;
+        left: -100%;
+    }
+}
